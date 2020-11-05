@@ -18,7 +18,10 @@ contract ZombieFactory {
     Zombie[] public zombies;
 
     //standard format for functions, use _variable to distinguish from global variable
-    function createZombie(string memory _name, uint _dna) public {
+    //with private functions its convention to start them with _
+    function _createZombie(string memory _name, uint _dna) private {
             zombies.push(Zombie(_name,_dna));
     }
+
+        
 }
