@@ -13,4 +13,12 @@ contract ZombieFactory {
         string name;
         uint dna;
     }
+
+    // Public array readable by outside contracts
+    Zombie[] public zombies;
+
+    //standard format for functions, use _variable to distinguish from global variable
+    function createZombie(string memory _name, uint _dna) public {
+
+    }
 }
