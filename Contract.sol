@@ -23,5 +23,9 @@ contract ZombieFactory {
             zombies.push(Zombie(_name,_dna));
     }
 
+    //pure function could be called with parameters that don't read any data from the app's state
+    //view functions can return data about the state of the app but won't modify said data
+    function _generateRandomDna(string memory _str) private view returns (uint){
         
+    }
 }
