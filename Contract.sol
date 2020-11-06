@@ -2,6 +2,10 @@ pragma solidity >=0.5.0 <0.6.0;
 
 contract ZombieFactory {
 
+    // fire an event so that your front-end can listen for specific SC events
+    // like when a zombie is created
+    event NewZombie(uint zombieId, string name, uint dna);
+
     // uints must be positive
     uint dnaDigits = 16;
 
@@ -20,7 +24,9 @@ contract ZombieFactory {
     //standard format for functions, use _variable to distinguish from global variable
     //with private functions its convention to start them with _
     function _createZombie(string memory _name, uint _dna) private {
-            zombies.push(Zombie(_name,_dna));
+        uint id = zombies.push(Zombie(_name, _dna)) - 1;
+            // emit an event
+        emit NewZombie(id, _name, _dna);
     }
 
     //pure function could be called with parameters that don't read any data from the app's state
@@ -29,8 +35,14 @@ contract ZombieFactory {
         //encode the string with keccak 256 hash function
         //typecast the result of hash function as uint and store it
        uint rand = uint(keccak256(abi.encodePacked(_str)));
-       //return 16 digits only using modulo operator
+       //return 16 digits of dna only using modulo operator
        return rand % dnaModulus;
-
     }
+
+    function createRandomZombie(string memory _name) public {
+        uint randDna = _generateRandomDna(_name);
+        _createZombie(_name,randDna);
+    }
+
+
 }
